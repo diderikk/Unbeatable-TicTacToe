@@ -5,4 +5,6 @@
 Currently, I have not distributed the web-application. Therefore, to run the application:</p>
 <code>cd tic-tac-toe </code>
 <br />
+<code>npm install</code>
+<br />
 <code>npm start</code>
