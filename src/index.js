@@ -3,11 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 const minimax = require('./minimax');
 
-const countObj = {
-    count: 0
+const dataObj = {
+    count: 0,
+    bestMoves: []
 };
 
-let playFirst = false;
+const MoveList = (props) => {
+    return (
+        <div className="moveList">
+                                <p>Other moves {'({Index:Evaluation})'}: </p>
+                                <ul>
+                                    {dataObj.bestMoves.map(obj => 
+                                    <li key={obj.index}>
+                                        {`{${obj.index}: ${obj.evaluation}}, `}
+                                    </li>)}
+                                </ul>
+                            </div>
+    )
+}
 
 
 const Square = (props) => {
@@ -53,7 +66,7 @@ class Board extends React.Component{
             player: (this.state.player === 'X')?'O':'X',
             board: Array(9).fill(null)
         });
-        countObj.count = 0; 
+        dataObj.count = 0; 
     }
 
     handlePlayButton(){
@@ -61,27 +74,27 @@ class Board extends React.Component{
             playFirst: !this.state.playFirst,
             board: Array(9).fill(null)
         });
-        countObj.count = 0;
+        dataObj.count = 0;
     }
 
     handlePlayAgainButton(){
         this.setState({
             board: Array(9).fill(null)
         });
-        countObj.count = 0;
+        dataObj.count = 0;
     }
 
     minmaxHandle(i){
-        countObj.count = 0;
+        dataObj.count = 0;
         let temp = this.state.board.slice();
         if(minimax.findWinner(temp) || temp[i]){
             return;
         }
         temp[i] = this.state.player;
-        let index = minimax.minimax(temp,0,true,countObj,this.state.player);
-        if(minimax.emptySpaces(temp) != 0){
+        let index = minimax.minimax(temp,0,true,dataObj,this.state.player);
+        if(minimax.emptySpaces(temp) !== 0){
             temp[index] = (this.state.player === 'X')?'O':'X';
-            console.log(countObj);
+            console.log(dataObj.bestMoves);
         }
         this.setState({
             board: temp
@@ -96,19 +109,17 @@ class Board extends React.Component{
         )
     }
     
-//TODO add footer with games computed, equally good moves (with value?). Alpha-beta pruning, posistion-json
-//TODO fix stalemate jump, remove public foler
     render() {  
         let winner = minimax.findWinner(this.state.board);
         let status = <h2>Next move: <h1>{(this.state.player === 'X')?"X":"O"}</h1></h2>;
         if(winner) status = <h2>Winner: <h1>{winner}</h1></h2>;
         else if(minimax.emptySpaces(this.state.board) === 0) status = <h1>Stalemate</h1>;
 
-        let gamesCalculated = <h3>Games computed: {countObj.count}</h3>
+        let gamesCalculated = <p>Games computed: {dataObj.count}</p>
 
         if(!this.state.playFirst && minimax.emptySpaces(this.state.board) === 9){
             let temp = this.state.board.slice();
-            let index = minimax.minimax(temp,0,true,countObj,this.state.player);
+            let index = minimax.minimax(temp,0,true,dataObj,this.state.player);
             temp[index] = (this.state.player === 'X')?'O':'X';
             this.setState({
                 board: temp
@@ -125,7 +136,7 @@ class Board extends React.Component{
                     buttonPlayAgainHandle={() => this.handlePlayAgainButton()}
                     />
                 <div className="board">
-                    {status}
+                    <div className="status">{status}</div>
                     <div className="row">
                         {this.renderSquare(0)}
                         {this.renderSquare(1)}
@@ -141,7 +152,13 @@ class Board extends React.Component{
                         {this.renderSquare(7)}
                         {this.renderSquare(8)}
                     </div>
-                    <div className="gc">{gamesCalculated}</div>
+                    <footer>
+                        <hr />
+                        <div className="footerContainer">
+                            <div className="gc">{gamesCalculated}</div>
+                            <MoveList />
+                        </div>
+                    </footer>
                 </div>
             </div>
         )

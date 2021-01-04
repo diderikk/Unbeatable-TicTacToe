@@ -1,4 +1,4 @@
-export {findWinner, emptySpaces, minimax as minimax}
+export {findWinner, emptySpaces, minimax}
 
 function findWinner(board){
     //Rows and columns
@@ -22,13 +22,14 @@ function emptySpaces(board){
     return count;
 }
 
-function minimax(board, depth, isMaximizer, count, player){
+function minimax(board, depth, isMaximizer, dataObj, player){
     let bestIndex = null;
     let winner = findWinner(board);
     let emptySpacesVar = emptySpaces(board);
 
     if(emptySpacesVar === 0 || winner){
-        count.count++;
+        dataObj.count++;
+        
         if(winner === player){
             return -10 + depth;
         }
@@ -47,13 +48,30 @@ function minimax(board, depth, isMaximizer, count, player){
             if(board[i]) continue;
             let temp = board.slice();
             temp[i] = (player === 'X')?'O':'X';
-            let evaluation = minimax(temp, depth+1, false, count, player);
+            let evaluation = minimax(temp, depth+1, false, dataObj, player);
+            if(evaluation === maxEval && depth === 0){
+                dataObj.bestMoves.push({
+                    index: i,
+                    evaluation: evaluation
+                });
+            }
             if(evaluation > maxEval){
                 maxEval = evaluation;
                 bestIndex = i;
+                if(depth === 0){
+                    dataObj.bestMoves = [];
+                    dataObj.bestMoves.push({
+                        index: i,
+                        evaluation: evaluation
+                    });
+                }
             }
         }
-        if(depth === 0) return bestIndex;
+        if(depth === 0) {
+            let randomInt = Math.floor(Math.random() * dataObj.bestMoves.length);
+            let indexObj = dataObj.bestMoves.splice(randomInt,1);
+            return indexObj[0].index;
+        };
         return maxEval;
     }
     else{
@@ -62,7 +80,7 @@ function minimax(board, depth, isMaximizer, count, player){
             if(board[i]) continue;
             let temp = board.slice();
             temp[i] = (player === 'X')?'X':'O';
-            let evaluation = minimax(temp, depth+1, true, count, player);
+            let evaluation = minimax(temp, depth+1, true, dataObj, player);
             if(evaluation < minEval){
                 minEval = evaluation;
                 bestIndex = i;
@@ -71,5 +89,4 @@ function minimax(board, depth, isMaximizer, count, player){
         if(depth === 0) return bestIndex;
         return minEval;
     }
-    return bestIndex;
 }
