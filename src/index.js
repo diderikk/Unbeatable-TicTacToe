@@ -11,14 +11,14 @@ const dataObj = {
 const MoveList = (props) => {
     return (
         <div className="moveList">
-                                <p>Other moves {'({Index:Evaluation})'}: </p>
-                                <ul>
-                                    {dataObj.bestMoves.map(obj => 
-                                    <li key={obj.index}>
-                                        {`{${obj.index}: ${obj.evaluation}}, `}
-                                    </li>)}
-                                </ul>
-                            </div>
+            <p>Other moves {'({Index:Evaluation})'}: </p>
+            <ul>
+                {dataObj.bestMoves.map(obj => 
+                <li key={obj.index}>
+                    {`{${obj.index}: ${obj.evaluation}}, `}
+                </li>)}
+            </ul>
+        </div>
     )
 }
 
@@ -53,7 +53,11 @@ class Board extends React.Component{
         this.state = {
             board: Array(9).fill(null),
             player: 'X',
-            playFirst: false
+            playFirst: false,
+            counter: {
+                count: 0,
+                bestMoves: []
+            }
         }
 
         this.renderSquare = this.renderSquare.bind(this);
@@ -86,15 +90,20 @@ class Board extends React.Component{
 
     minmaxHandle(i){
         dataObj.count = 0;
+        this.setState((state) => {
+            let c = Object.assign({},state.counter);
+            c.count = 0;
+            return {c};
+        })
         let temp = this.state.board.slice();
         if(minimax.findWinner(temp) || temp[i]){
             return;
         }
         temp[i] = this.state.player;
         let index = minimax.minimax(temp,0,true,dataObj,this.state.player);
+        minimax.minimaxPruned(temp,0,-Infinity, Infinity,true,this.state.counter,this.state.player)
         if(minimax.emptySpaces(temp) !== 0){
             temp[index] = (this.state.player === 'X')?'O':'X';
-            console.log(dataObj.bestMoves);
         }
         this.setState({
             board: temp
@@ -115,11 +124,12 @@ class Board extends React.Component{
         if(winner) status = <h2>Winner: <h1>{winner}</h1></h2>;
         else if(minimax.emptySpaces(this.state.board) === 0) status = <h1>Stalemate</h1>;
 
-        let gamesCalculated = <p>Games computed: {dataObj.count}</p>
+        let gamesCalculated = <p>Games computed: {dataObj.count} &nbsp; &nbsp; Games computed (pruned): {this.state.counter.count}</p>
 
         if(!this.state.playFirst && minimax.emptySpaces(this.state.board) === 9){
             let temp = this.state.board.slice();
             let index = minimax.minimax(temp,0,true,dataObj,this.state.player);
+            minimax.minimaxPruned(temp,0,-Infinity, Infinity,true,this.state.counter,this.state.player)
             temp[index] = (this.state.player === 'X')?'O':'X';
             this.setState({
                 board: temp
@@ -155,7 +165,9 @@ class Board extends React.Component{
                     <footer>
                         <hr />
                         <div className="footerContainer">
-                            <div className="gc">{gamesCalculated}</div>
+                            <div className="gc">
+                                {gamesCalculated}
+                            </div>
                             <MoveList />
                         </div>
                     </footer>

@@ -2,6 +2,7 @@
   "name": "tic-tac-toe",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "homepage": "https://diderikk.github.io/unbeatable-tictactoe",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
@@ -20,8 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "launch": "node server.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
