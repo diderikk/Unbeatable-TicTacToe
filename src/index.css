@@ -1,6 +1,6 @@
 :root{
     --button-height: 25px;
-    --button-width: 120px;
+    --button-width: 130px;
     --body-margin-top: 0;
     --footer-bottom: 20px;
     --board-margin-top: 40px;
@@ -131,7 +131,7 @@ footer{
     padding-left: 0;
 }
 
-@media (max-width: 620px){
+@media (max-width: 650px){
     :root{
         --button-height: 40px;
         --button-width: 120px;
@@ -187,7 +187,7 @@ footer{
     :root{
         --board-margin-top: 110px;
         --button-height: 50px;
-        --button-width: 160px;
+        --button-width: 170px;
         --font-size: 24px;
         --footer-bottom: 50px;
         --square-size: 120px;
@@ -205,6 +205,34 @@ footer{
 @media (max-width: 500px) and (max-height: 750px){
     body{
         margin-top: 0;
+    }
+}
+
+@media (max-width: 730px) and (min-height: 900px) {
+    :root{
+        --font-size: 20px;
+    }
+    body{
+        margin-top: 0;
+    }
+}
+
+@media (max-height: 550px){
+    :root{
+        --footer-bottom: 20px;  
+    }
+    #gc2{
+        position: absolute;
+        visibility: hidden;
+    }
+
+    
+}
+
+@media (max-height: 460px){
+    footer{
+        position: absolute;
+        visibility: hidden;
     }
 }
 
