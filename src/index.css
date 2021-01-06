@@ -1,7 +1,20 @@
+:root{
+    --button-height: 25px;
+    --button-width: 120px;
+    --body-margin-top: 0;
+    --footer-bottom: 20px;
+    --board-margin-top: 40px;
+    --font-size: 16px;
+    --square-size: 70px;
+    --square-font-size: 40px;
+}
+
 body{
     font-family: 'Courier New', Courier, monospace;
     margin: 0;
+    margin-top: var(--body-margin-top);
 }
+
 
 button{
     margin: 0;  
@@ -17,7 +30,7 @@ hr {
 
 footer{
     position: absolute;
-    bottom: 20px;
+    bottom: var(--footer-bottom);
     width: 100%;
     height: 60px;
 }
@@ -31,11 +44,11 @@ footer{
 }
 
 .square{
-    width: 70px;
-    height: 70px;
+    width: var(--square-size);
+    height: var(--square-size);
     background-color: #fff;
     border: solid 1px rgb(100, 100, 100);
-    font-size: 40px;
+    font-size: var(--square-font-size);
     font-weight: bold;
     float: left;    
     margin-right: -1px;
@@ -53,7 +66,7 @@ footer{
 } */
 
 .board{
-    margin-top: 40px;
+    margin-top: var(--board-margin-top);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,15 +76,21 @@ footer{
 .footerContainer{
     padding: 0 20px 0 20px;
     font-weight: 400;
-    font-size: 16px;
     font-family: 'Lato', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: var(--font-size);
 }
 
 .gc{
     margin-top: 10px;
+    margin-left: 20px;
+    display: flex;
+}
+
+#gc2{
+    margin-left: 20px;
 }
 
 .selectPlay{
@@ -80,13 +99,14 @@ footer{
 }
 
 .selectPlay button{
-    width: 120px;
-    height: 25px;
+    width: var(--button-width);
+    height: var(--button-height);
     background-color: #fff;
     border: 2px solid #000;
     margin: 20px;
     border-radius: 3px;
     cursor: pointer;
+    font-size: var(--font-size);
 }
 
 .status{
@@ -111,6 +131,74 @@ footer{
     padding-left: 0;
 }
 
-.gc {
-   margin-left: 20px;
+@media (max-width: 450px){
+    :root{
+        --button-height: 40px;
+        --button-width: 120px;
+        --body-margin-top: 80px;
+        --footer-bottom: 80px;
+    }
+
+    #switchType{
+        visibility: hidden;
+        left: -200px;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .moveList{
+        visibility: hidden;
+        position: absolute;
+    }
+
+    .gc{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #gc2{
+        margin-left: 0;
+    }
+
 }
+
+@media (max-width: 1150px){
+    .moveList{
+        visibility: hidden;
+        position: absolute;
+    }
+}
+
+@media (min-height: 700px){
+    :root{
+        --body-margin-top: 80px;
+    }
+}
+
+@media (min-height: 900px) and (max-width: 1650px){
+    .moveList{
+        visibility: hidden;
+        position: absolute;
+    }
+}
+
+@media (min-height: 900px){
+    :root{
+        --board-margin-top: 110px;
+        --button-height: 50px;
+        --button-width: 160px;
+        --font-size: 24px;
+        --footer-bottom: 50px;
+        --square-size: 120px;
+        --square-font-size: 70px;
+    }
+
+    body{
+        font-size: 24px;    
+    }
+    .status{
+        height: 100px;
+    }
+}
+

@@ -34,7 +34,7 @@ const Square = (props) => {
 const Buttons = (props) => {
         return (
             <div className="selectPlay">
-                <button onClick={props.buttonPlayerHandle}>
+                <button id="switchType" onClick={props.buttonPlayerHandle}>
                     Switch to: {(props.player === 'X')?'O':'X'}
                 </button>
                 <button onClick={props.buttonFirstHandle}>
@@ -68,7 +68,10 @@ class Board extends React.Component{
     handleButton(){
         this.setState({
             player: (this.state.player === 'X')?'O':'X',
-            board: Array(9).fill(null)
+            board: Array(9).fill(null),
+            counter: {
+                count: 0
+            }
         });
         dataObj.count = 0; 
     }
@@ -76,14 +79,20 @@ class Board extends React.Component{
     handlePlayButton(){
         this.setState({
             playFirst: !this.state.playFirst,
-            board: Array(9).fill(null)
+            board: Array(9).fill(null),
+            counter: {
+                count: 0
+            }
         });
         dataObj.count = 0;
     }
 
     handlePlayAgainButton(){
         this.setState({
-            board: Array(9).fill(null)
+            board: Array(9).fill(null),
+            counter: {
+                count: 0
+            }
         });
         dataObj.count = 0;
     }
@@ -124,7 +133,8 @@ class Board extends React.Component{
         if(winner) status = <h2>Winner: <h1>{winner}</h1></h2>;
         else if(minimax.emptySpaces(this.state.board) === 0) status = <h1>Stalemate</h1>;
 
-        let gamesCalculated = <p>Games computed: {dataObj.count} &nbsp; &nbsp; Games computed (pruned): {this.state.counter.count}</p>
+        let gamesCalculated = <p>Games computed: {dataObj.count}</p>
+        let gamesCalculatedPruned = <p>Games computed (optimized): {this.state.counter.count}</p>
 
         if(!this.state.playFirst && minimax.emptySpaces(this.state.board) === 9){
             let temp = this.state.board.slice();
@@ -166,7 +176,8 @@ class Board extends React.Component{
                         <hr />
                         <div className="footerContainer">
                             <div className="gc">
-                                {gamesCalculated}
+                                <div id='gc1'>{gamesCalculated}</div>
+                                <div id='gc2'>{gamesCalculatedPruned}</div>
                             </div>
                             <MoveList />
                         </div>
