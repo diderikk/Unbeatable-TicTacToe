@@ -2,7 +2,6 @@
   "name": "tic-tac-toe",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3000",
   "homepage": "https://diderikk.github.io/unbeatable-tictactoe",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.8",
