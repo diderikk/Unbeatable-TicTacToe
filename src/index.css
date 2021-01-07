@@ -1,6 +1,6 @@
 :root{
     --button-height: 30px;
-    --button-width: 130px;
+    --button-width: 140px;
     --button-margin: 20px;
     --body-margin-top: 0;
     --footer-bottom: 20px;
@@ -134,23 +134,19 @@ footer{
 
 @media (max-width: 650px){
     :root{
-        --button-height: 40px;
-        --button-width: 130px;
+        --button-height: 50px;
+        --button-width: 165px;
         --button-margin: 10px;
         --body-margin-top: 80px;
         --footer-bottom: 80px;
     }
 
     #switchType{
-        visibility: hidden;
-        left: -200px;
-        position: absolute;
-        z-index: -1;
+        display: none;
     }
 
     .moveList{
-        visibility: hidden;
-        position: absolute;
+        display: none;
     }
 
     .gc{
@@ -167,8 +163,7 @@ footer{
 
 @media (max-width: 1150px){
     .moveList{
-        visibility: hidden;
-        position: absolute;
+        display: none;
     }
 }
 
@@ -180,8 +175,7 @@ footer{
 
 @media (min-height: 900px) and (max-width: 1650px){
     .moveList{
-        visibility: hidden;
-        position: absolute;
+        display: none;
     }
 }
 
@@ -189,7 +183,7 @@ footer{
     :root{
         --board-margin-top: 110px;
         --button-height: 50px;
-        --button-width: 170px;
+        --button-width: 200px;
         --font-size: 24px;
         --footer-bottom: 50px;
         --square-size: 120px;
@@ -204,7 +198,7 @@ footer{
     }
 }
 
-@media (max-width: 500px) and (max-height: 750px){
+@media (max-width: 650px) and (max-height: 750px){
     body{
         margin-top: 0;
     }
@@ -224,8 +218,7 @@ footer{
         --footer-bottom: 20px;  
     }
     #gc2{
-        position: absolute;
-        visibility: hidden;
+        display: none;
     }
 
     
@@ -233,8 +226,7 @@ footer{
 
 @media (max-height: 460px){
     footer{
-        position: absolute;
-        visibility: hidden;
+        display: none;
     }
 }
 

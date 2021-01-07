@@ -64,7 +64,7 @@ class Board extends React.Component{
         this.minmaxHandle = this.minmaxHandle.bind(this);
         this.handleButton = this.handleButton.bind(this);
     }
-
+    //Handles Switcht to X or O button
     handleButton(){
         this.setState({
             player: (this.state.player === 'X')?'O':'X',
@@ -75,7 +75,7 @@ class Board extends React.Component{
         });
         dataObj.count = 0; 
     }
-
+    //Handles PlayFirst/Second button
     handlePlayButton(){
         this.setState({
             playFirst: !this.state.playFirst,
@@ -86,7 +86,7 @@ class Board extends React.Component{
         });
         dataObj.count = 0;
     }
-
+    //Handles play again button
     handlePlayAgainButton(){
         this.setState({
             board: Array(9).fill(null),
@@ -99,11 +99,9 @@ class Board extends React.Component{
 
     minmaxHandle(i){
         dataObj.count = 0;
-        this.setState((state) => {
-            let c = Object.assign({},state.counter);
-            c.count = 0;
-            return {c};
-        })
+        //Did not find a better solution. Currently.
+        this.state.counter.count = 0;
+
         let temp = this.state.board.slice();
         if(minimax.findWinner(temp) || temp[i]){
             return;
